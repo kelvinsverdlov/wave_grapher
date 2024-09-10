@@ -66,7 +66,7 @@ class WaveClass:
 
         figure, axes = pyplot.subplots(1, 1)
         axes.set_xlim((lower_bound * 180, max_bound * 180))
-        axes.set_ylim((-self.wave_amplitude * 1 / zoom_multiplicative, self.wave_amplitude * 1 / zoom_multiplicative))
+        axes.set_ylim((-self.wave_amplitude * zoom_multiplicative, self.wave_amplitude * zoom_multiplicative))
 
         # Cosmetic changes
         pyplot.xlabel("Time t | Angle α in Degrees")
@@ -110,7 +110,7 @@ def main():
 
         inputs = gather_inputs()
         print("You'll be granted an option for another graph once this one is closed!")
-        
+
         wave_object = WaveClass(inputs[0], inputs[1], inputs[2])
         wave_object.graph_wave(inputs[3], inputs[4], inputs[5])
 
