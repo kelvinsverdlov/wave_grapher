@@ -44,7 +44,7 @@ class WaveClass:
         wave_type = getattr(numpy, f"{self.wave_type}", error_code)
         self.__safety_check_wave(wave_type, self.wave_amplitude, self.wave_frequency, error_code)
 
-        wave_function = wave_type(180 * 2 * self.wave_frequency * variable)
+        wave_function = self.wave_amplitude*wave_type(180 * 2 * self.wave_frequency * variable)
 
         return wave_function
 
