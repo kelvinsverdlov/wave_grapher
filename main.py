@@ -9,7 +9,7 @@ pyplot.rcParams["figure.autolayout"] = True
 class WaveClass:
 
     def __init__(self, wave_type, wave_amplitude=1, wave_frequency=1):
-        
+
         """
         :param wave_type: The type of the wave, Sine, Cosine, Tangent...
         :param wave_amplitude: The wave's maximum amplitude, defaulted to 1.
@@ -38,20 +38,18 @@ class WaveClass:
         if not type(wave_frequency) in allowed_types:
             raise Exception("Wave frequency is not allowed!")
 
-
     def wave_function(self, variable):
         error_code = "Does not exist"
         wave_type = getattr(numpy, f"{self.wave_type}", error_code)
         self.__safety_check_wave(wave_type, self.wave_amplitude, self.wave_frequency, error_code)
 
-        wave_function = self.wave_amplitude*wave_type(180 * 2 * self.wave_frequency * variable)
+        wave_function = self.wave_amplitude * wave_type(180 * 2 * self.wave_frequency * variable)
 
         return wave_function
 
     @staticmethod
     def set_value(graph_values, x_values, y_values, frame):
         graph_values.set_data(x_values[:frame], y_values[:frame])
-
 
     def graph_wave(self, lower_bound, max_bound, zoom_multiplicative=1):
 
@@ -68,10 +66,26 @@ class WaveClass:
 
         figure, axes = pyplot.subplots(1, 1)
         axes.set_xlim((lower_bound * 180, max_bound * 180))
-        axes.set_ylim((-self.wave_amplitude * 1/zoom_multiplicative, self.wave_amplitude * 1/zoom_multiplicative))
+        axes.set_ylim((-self.wave_amplitude * 1 / zoom_multiplicative, self.wave_amplitude * 1 / zoom_multiplicative))
 
+        # Cosmetic changes
+        pyplot.xlabel("Time t | Angle α in Degrees")
+        pyplot.ylabel("Voltage v | Outputted Value")
+
+        axes.spines["right"].set_visible(False)
+        axes.spines["left"].set_visible(False)
+        axes.spines["top"].set_visible(False)
+
+        axes.yaxis.set_ticks_position("left")
+        axes.xaxis.set_ticks_position("bottom")
+        
+        axes.spines["bottom"].set_bounds(min(x_values), max(x_values))
+        pyplot.grid(visible=True, which='major', axis='both')
+
+        # Animation
         graph_values, = axes.plot([], [])
-        animated_graph = animation.FuncAnimation(figure, lambda i: self.set_value(graph_values, x_values, y_values, i), frames=len(x_values), interval=1)
+        animated_graph = animation.FuncAnimation(figure, lambda i: self.set_value(graph_values, x_values, y_values, i),
+                                                 frames=len(x_values), interval=1)
         pyplot.show()
 
 
