@@ -78,7 +78,7 @@ class WaveClass:
 
         axes.yaxis.set_ticks_position("left")
         axes.xaxis.set_ticks_position("bottom")
-        
+
         axes.spines["bottom"].set_bounds(min(x_values), max(x_values))
         pyplot.grid(visible=True, which='major', axis='both')
 
@@ -88,6 +88,31 @@ class WaveClass:
                                                  frames=len(x_values), interval=1)
         pyplot.show()
 
+def gather_inputs():
+    function_type = input("Enter function type: ")
+    wave_amplitude = float(input("Enter wave amplitude: "))
+    wave_frequency = float(input("Enter wave frequency: "))
 
-wave_object = WaveClass("sin", 1, 0.0001)
-wave_object.graph_wave(0, 4)
+    lower_bound = float(input("Enter lower bound (in pi radians): "))
+    upper_bound = float(input("Enter upper bound (in pi radians): "))
+    zoom_multiplier = float(input("Enter zoom multiplier (lower value = bigger zoom, 0.5 = x2 zoom): "))
+
+    return function_type, wave_amplitude, wave_frequency, lower_bound, upper_bound, zoom_multiplier
+
+
+def main():
+    cancel_operation = "0"
+
+    while "Quit".lower() not in cancel_operation:
+        # Test values:
+        # wave_object = WaveClass("cos", 1, 0.0001)
+        # wave_object.graph_wave(0, 4)
+
+        inputs = gather_inputs()
+        print("You'll be granted an option for another graph once this one is closed!")
+        
+        wave_object = WaveClass(inputs[0], inputs[1], inputs[2])
+        wave_object.graph_wave(inputs[3], inputs[4], inputs[5])
+
+        cancel_operation = input("Do you want to quit? Type anything with 'quit' in it to quit!")
+main()
