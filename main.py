@@ -9,6 +9,7 @@ pyplot.rcParams["figure.autolayout"] = True
 class WaveClass:
 
     def __init__(self, wave_type, wave_amplitude=1, wave_frequency=1):
+        
         """
         :param wave_type: The type of the wave, Sine, Cosine, Tangent...
         :param wave_amplitude: The wave's maximum amplitude, defaulted to 1.
@@ -72,7 +73,6 @@ class WaveClass:
         graph_values, = axes.plot([], [])
         animated_graph = animation.FuncAnimation(figure, lambda i: self.set_value(graph_values, x_values, y_values, i), frames=len(x_values), interval=1)
         pyplot.show()
-
 
 
 wave_object = WaveClass("sin", 1, 0.0001)
